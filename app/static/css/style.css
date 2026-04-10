@@ -43,6 +43,8 @@ body {
 
 #game-board {
     display: block;
+    width: 300px;
+    height: 600px;
 }
 
 /* === Sidebar === */
