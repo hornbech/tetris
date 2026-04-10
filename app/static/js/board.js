@@ -56,6 +56,22 @@ class Board {
     }
 
     draw(ctx) {
+        // Draw grid lines to show full board area
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+        ctx.lineWidth = 0.5;
+        for (let r = 0; r <= ROWS; r++) {
+            ctx.beginPath();
+            ctx.moveTo(0, r * BLOCK_SIZE);
+            ctx.lineTo(COLS * BLOCK_SIZE, r * BLOCK_SIZE);
+            ctx.stroke();
+        }
+        for (let c = 0; c <= COLS; c++) {
+            ctx.beginPath();
+            ctx.moveTo(c * BLOCK_SIZE, 0);
+            ctx.lineTo(c * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+            ctx.stroke();
+        }
+
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
                 if (this.grid[r][c] === 1) {

@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const game = new Game();
 
+    // Debug: log canvas dimensions
+    console.log("Canvas internal:", game.canvas.width, "x", game.canvas.height);
+    console.log("Canvas CSS:", game.canvas.offsetWidth, "x", game.canvas.offsetHeight);
+    console.log("ROWS:", ROWS, "COLS:", COLS, "BLOCK_SIZE:", BLOCK_SIZE);
+
+    // Draw initial board grid so it's visible before game starts
+    game.draw();
+
     // Element references (exact IDs from the HTML template)
     const nicknameModal = document.getElementById("nickname-modal");
     const modalNicknameInput = document.getElementById("modal-nickname-input");
