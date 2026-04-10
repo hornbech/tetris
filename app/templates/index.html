@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatthiBastian - Tetris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1 class="game-title">MatthiBastian</h1>
+
+    <div class="game-container">
+        <div class="game-board-wrapper">
+            <canvas id="game-board" width="300" height="600"></canvas>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Next Piece</h3>
+                <canvas id="next-piece" width="120" height="120"></canvas>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Score</h3>
+                <p class="stat-value" id="score-display">0</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Level</h3>
+                <p class="stat-value" id="level-display">1</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Lines</h3>
+                <p class="stat-value" id="lines-display">0</p>
+            </div>
+
+            <div class="sidebar-section controls-legend">
+                <h3>Controls</h3>
+                <div class="controls-grid">
+                    <span class="key">&larr;</span><span class="action">Move Left</span>
+                    <span class="key">&rarr;</span><span class="action">Move Right</span>
+                    <span class="key">&darr;</span><span class="action">Soft Drop</span>
+                    <span class="key">&uarr;</span><span class="action">Rotate</span>
+                    <span class="key">Space</span><span class="action">Hard Drop</span>
+                    <span class="key">P</span><span class="action">Pause</span>
+                    <span class="key">Enter</span><span class="action">Start</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p id="start-message">Press ENTER to start</p>
+
+    <div class="leaderboard">
+        <h2 class="leaderboard-title">Leaderboard</h2>
+        <div class="lb-tabs">
+            <button class="lb-tab active" data-tab="global">Global</button>
+            <button class="lb-tab" data-tab="personal">Personal</button>
+        </div>
+        <div id="global-scores" class="lb-content"></div>
+        <div id="personal-scores" class="lb-content hidden"></div>
+    </div>
+
+    <div id="game-over-overlay" class="hidden">
+        <div class="overlay-card">
+            <h2>Game Over</h2>
+            <p>Score: <span id="final-score">0</span></p>
+            <p>Lines: <span id="final-lines">0</span></p>
+            <p>Level: <span id="final-level">1</span></p>
+            <label for="nickname-input">Nickname</label>
+            <input type="text" id="nickname-input" maxlength="20" placeholder="Your name">
+            <button id="submit-score-btn">Submit Score</button>
+        </div>
+    </div>
+
+    <div id="nickname-modal">
+        <div class="overlay-card">
+            <h2>Welcome to MatthiBastian!</h2>
+            <label for="modal-nickname-input">Choose a nickname</label>
+            <input type="text" id="modal-nickname-input" maxlength="20" placeholder="Your name">
+            <button id="start-btn">Start</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/constants.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/piece.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/board.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/leaderboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

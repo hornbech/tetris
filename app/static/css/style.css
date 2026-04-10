@@ -1,0 +1,333 @@
+/* === Reset & Base === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #FFF5F5;
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* === Title === */
+.game-title {
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #D4A5FF;
+    text-shadow: 2px 2px 0 #c08aee, 4px 4px 0 rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+}
+
+/* === Game Container === */
+.game-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* === Board Wrapper === */
+.game-board-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    background: #2a2a2a;
+    flex-shrink: 0;
+}
+
+#game-board {
+    display: block;
+}
+
+/* === Sidebar === */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 150px;
+}
+
+.sidebar-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.sidebar-section h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #A8D8EA;
+}
+
+.sidebar-section:nth-child(2) h3 {
+    color: #FFB7B2;
+}
+
+.sidebar-section:nth-child(3) h3 {
+    color: #B5EAD7;
+}
+
+.sidebar-section:nth-child(4) h3 {
+    color: #FFDAC1;
+}
+
+.sidebar-section:nth-child(5) h3 {
+    color: #D4A5FF;
+}
+
+#next-piece {
+    display: block;
+    margin: 0 auto;
+    background: #2a2a2a;
+    border-radius: 8px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #444;
+}
+
+/* === Controls Legend === */
+.controls-legend {
+    text-align: left;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+    font-size: 0.85rem;
+    align-items: center;
+}
+
+.key {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    background: #f0f0f0;
+    border-radius: 4px;
+    padding: 2px 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    border: 1px solid #ddd;
+}
+
+.action {
+    color: #666;
+}
+
+/* === Start Message === */
+#start-message {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #D4A5FF;
+    margin-top: 20px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* === Leaderboard === */
+.leaderboard {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 24px auto 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.leaderboard-title {
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    color: #D4A5FF;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+.lb-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.lb-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    padding: 10px 0;
+    cursor: pointer;
+    color: #aaa;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.lb-tab:hover {
+    color: #D4A5FF;
+}
+
+.lb-tab.active {
+    color: #D4A5FF;
+    border-bottom-color: #D4A5FF;
+}
+
+.lb-content {
+    min-height: 40px;
+}
+
+.lb-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 4px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.lb-row:last-child {
+    border-bottom: none;
+}
+
+.lb-rank {
+    width: 32px;
+    font-weight: 700;
+    color: #D4A5FF;
+}
+
+.lb-name {
+    flex-grow: 1;
+    font-weight: 600;
+}
+
+.lb-score {
+    text-align: right;
+    font-weight: 700;
+    color: #666;
+}
+
+/* === Overlays === */
+#game-over-overlay,
+#nickname-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.overlay-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.overlay-card h2 {
+    font-family: 'Fredoka One', cursive;
+    color: #D4A5FF;
+    margin-bottom: 16px;
+    font-size: 1.6rem;
+}
+
+.overlay-card p {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.overlay-card label {
+    display: block;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    color: #666;
+}
+
+.overlay-card input[type="text"] {
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #D4A5FF;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.overlay-card input[type="text"]:focus {
+    border-color: #b880e6;
+}
+
+.overlay-card button {
+    margin-top: 20px;
+    background: #D4A5FF;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-family: 'Fredoka One', cursive;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.overlay-card button:hover {
+    background: #c08aee;
+}
+
+/* === Hidden Utility === */
+.hidden {
+    display: none !important;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .sidebar-section {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .controls-legend {
+        flex-basis: 100%;
+    }
+
+    .game-title {
+        font-size: 2rem;
+    }
+}
