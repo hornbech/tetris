@@ -1,0 +1,11 @@
+services:
+  matthibastian:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - score_data:/app/instance
+    restart: unless-stopped
+
+volumes:
+  score_data:
