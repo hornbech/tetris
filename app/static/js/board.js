@@ -40,8 +40,10 @@ class Board {
 
     clearLines() {
         let cleared = 0;
+        const rows = [];
         for (let r = ROWS - 1; r >= 0; r--) {
             if (this.grid[r].every(cell => cell === 1)) {
+                rows.push(r);
                 this.grid.splice(r, 1);
                 this.grid.unshift(Array(COLS).fill(0));
                 this.lockedColors.splice(r, 1);
@@ -50,7 +52,7 @@ class Board {
                 r++; // re-check this row index since rows shifted down
             }
         }
-        return cleared;
+        return { count: cleared, rows };
     }
 
     draw(ctx) {
@@ -116,6 +118,34 @@ function drawRoundedBlock(ctx, x, y, size, color, alpha) {
     ctx.strokeStyle = "rgba(0, 0, 0, 0.15)";
     ctx.lineWidth = 1;
     ctx.stroke();
+
+    // Kawaii face (skip for ghost pieces)
+    if (alpha >= 0.5) {
+        // Eyes
+        ctx.fillStyle = "#333";
+        ctx.beginPath();
+        ctx.ellipse(bx + bs * 0.35, by + bs * 0.38, 2, 2.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(bx + bs * 0.65, by + bs * 0.38, 2, 2.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Eye shine
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(bx + bs * 0.36, by + bs * 0.35, 1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(bx + bs * 0.66, by + bs * 0.35, 1, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Smile
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(bx + bs * 0.5, by + bs * 0.52, bs * 0.15, 0.1 * Math.PI, 0.9 * Math.PI);
+        ctx.stroke();
+    }
 
     ctx.globalAlpha = 1.0;
 }

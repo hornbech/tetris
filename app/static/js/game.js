@@ -20,6 +20,9 @@ class Game {
         this.dropCounter = 0;
         this.lastTime = 0;
 
+        this.lockAnimation = null;
+        this.sparkles = [];
+
         this._boundUpdate = this.update.bind(this);
 
         document.addEventListener("keydown", (e) => this._handleKey(e));
@@ -108,6 +111,39 @@ class Game {
         // Draw active piece
         this.board.drawPiece(this.ctx, this.piece, 1.0);
 
+        // Lock bounce animation
+        if (this.lockAnimation) {
+            const elapsed = performance.now() - this.lockAnimation.startTime;
+            if (elapsed < this.lockAnimation.duration) {
+                const progress = elapsed / this.lockAnimation.duration;
+                const scale = 1 + 0.1 * (1 - progress);
+                for (const cell of this.lockAnimation.cells) {
+                    const cx = cell.x * BLOCK_SIZE + BLOCK_SIZE / 2;
+                    const cy = cell.y * BLOCK_SIZE + BLOCK_SIZE / 2;
+                    const scaledSize = BLOCK_SIZE * scale;
+                    const sx = cx - scaledSize / 2;
+                    const sy = cy - scaledSize / 2;
+                    drawRoundedBlock(this.ctx, sx, sy, scaledSize, cell.color, 1.0);
+                }
+            } else {
+                this.lockAnimation = null;
+            }
+        }
+
+        // Sparkle effects
+        this.sparkles = this.sparkles.filter(s => s.alpha > 0);
+        for (const s of this.sparkles) {
+            s.x += s.vx;
+            s.y += s.vy;
+            s.alpha -= 0.02;
+            this.ctx.globalAlpha = s.alpha;
+            this.ctx.fillStyle = "#FFD700";
+            this.ctx.beginPath();
+            this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            this.ctx.fill();
+        }
+        this.ctx.globalAlpha = 1.0;
+
         // Draw next piece preview
         this.nextCtx.clearRect(0, 0, this.nextCanvas.width, this.nextCanvas.height);
         const np = this.nextPiece;
@@ -188,12 +224,46 @@ class Game {
     }
 
     lockPiece() {
+        // Store lock animation cells before locking
+        const lockCells = [];
+        for (let r = 0; r < this.piece.shape.length; r++) {
+            for (let c = 0; c < this.piece.shape[r].length; c++) {
+                if (this.piece.shape[r][c] === 1) {
+                    lockCells.push({
+                        x: this.piece.x + c,
+                        y: this.piece.y + r,
+                        color: this.piece.color,
+                    });
+                }
+            }
+        }
+        this.lockAnimation = {
+            cells: lockCells,
+            startTime: performance.now(),
+            duration: 150,
+        };
+
         this.board.lock(this.piece);
-        const cleared = this.board.clearLines();
+        const result = this.board.clearLines();
+        const cleared = result.count;
         if (cleared > 0) {
             this.score += (POINTS[cleared] || 0) * this.level;
             this.lines += cleared;
             this.level = Math.floor(this.lines / LINES_PER_LEVEL) + 1;
+
+            // Generate sparkle particles for cleared rows
+            for (const r of result.rows) {
+                for (let i = 0; i < 8; i++) {
+                    this.sparkles.push({
+                        x: Math.random() * COLS * BLOCK_SIZE,
+                        y: r * BLOCK_SIZE + Math.random() * BLOCK_SIZE,
+                        size: Math.random() * 3 + 1,
+                        alpha: 1.0,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                    });
+                }
+            }
         }
 
         this.piece = this.nextPiece;
@@ -227,5 +297,7 @@ class Game {
         this.paused = false;
         this.dropCounter = 0;
         this.lastTime = 0;
+        this.lockAnimation = null;
+        this.sparkles = [];
     }
 }
